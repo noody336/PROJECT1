@@ -1,0 +1,53 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header>
+        <img src="">
+        <h1>BMW</h1>
+        <form action="{% url 'set_language' %}" method="POST">
+            {% csrf_token %}
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+            {% for language in languages %}
+            <button type="submit" name="language" value="{{language.code}}" {% if language.code == LANGUAGE_CODE %} disabled style="cursor: auto;" {% endif %}>
+                {% if language.code == 'ru' %}
+                RU
+                {% elif language.code == 'en' %}
+                EN
+                {% elif language.code == 'kk' %}
+                KZ
+                {% endif %}
+            </button>
+            {% endfor %}
+        </form>
+        <div class="buttons">
+            {% if user.is_authenticated %}
+            <p>{{user.first_name}} {{user.last_name}}</p>
+            <a href="{% url 'logout' %}">
+                <button>{% trans 'Выйти' %}</button>
+            {% else %}
+            <a href="{% url 'registr' %}">
+                <button> Регистрация </button>
+            </a>
+            <a href="{% url 'login' %}">
+                <button>Авторизация</button>
+            </a>
+            {% endif %}
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+<footer>
+    <p>&copy; 2025 BMW. Все права защищены.</p>
+</footer>
+</body>
+</html>

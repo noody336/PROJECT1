@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class = "NewPost">
+    <h1>Создание комментария</h1>
+    <form method = "POST" enctype = "multipart/form-data">
+        {% csrf_token %}
+        <label for="content">Комментарий</label>
+        {{form.content}}
+        <button type="submit">Добавить </button>
+    </form>
+</div>
+{% endblock %}

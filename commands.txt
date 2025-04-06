@@ -1,0 +1,11 @@
+python -m venv myvenv-создание виртуальной среды
+myvenv\Scripts\activate -активация виртуальной среды
+pip install Django psycopg2 Pillow
+pip freeze > requirements.txt - выгрузка библиотек проекта в отдельный файл
+pip install -r requirements.txt -установка библиотек из файла
+django-admin startproject blog . - создание главного проекта
+python manage.py runserver - запуск сервера 
+
+python manage.py migrate - выгрузка миграции в базу данных
+python manage.py startapp post - создание приложения пост
+python manage.py createsuperuser- создание супер пользователя

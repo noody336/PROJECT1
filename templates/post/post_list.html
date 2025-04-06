@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <div class="posts-wrapper">
+        {% if user.is_authenticated %}
+        <a href='{% url 'add_post' %}'>
+            <button> Новый пост </button>
+        </a>
+        {% endif %}
+        {% for post in posts %}
+            <a href="{% url 'post_details' pid=post.pk %}">
+                <div class="post">
+                    {% if post.att %}
+                        <div class="image-slider">
+                            <button class="prev-btn">&#10094;</button>
+                            <img src="{{ post.att.0.file.url }}" alt="Post Image" class="post-image">
+                            <button class="next-btn">&#10095;</button>
+                            <div class="image-data" data-images='[{% for image in post.att %}"{{ image.file.url }}"{% if not loop.last %},{% endif %}{% endfor %}]'></div>
+                        </div>
+                    {% endif %}
+                    <div class="post-content">
+                        <h2>{{ post.title }}</h2>
+                        <p>Автор: {{ post.author }}</p>
+                        <p>{{ post.content }}</p>
+                        <p>{{ post.time_stamp }} 
+                            {% if post.edited %}
+                                (редактировано)
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}
